@@ -24,6 +24,18 @@ app.post("/restaurants", async(req,res) =>{
 
 })
 
+app.put(`/restaurants/:id`, async(req,res) =>{
+    let id = req.params.id
+    let restaurant = await Restaurant.findByPk(id)
+    if (!restaurant) {
+        return res.status(404).send('Restaurant not found');
+    }
+    restaurant.name = req.body.name;
+    restaurant.location = req.body.location;
+    restaurant.cuisine = req.body.cuisine;
+    await restaurant.save()
+    res.json(restaurant)
+})
 
 
 module.exports = app;
