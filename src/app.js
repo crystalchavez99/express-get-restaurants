@@ -37,5 +37,15 @@ app.put(`/restaurants/:id`, async(req,res) =>{
     res.json(restaurant)
 })
 
+app.delete(`/restaurants/:id`, async(req,res) =>{
+    let id = req.params.id
+    let restaurant = await Restaurant.findByPk(id)
+    if (!restaurant) {
+        return res.status(404).send('Restaurant not found');
+    }
+    await restaurant.destroy()
+    res.send('Restaurant deleted');
+})
+
 
 module.exports = app;
