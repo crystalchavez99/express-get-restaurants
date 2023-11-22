@@ -1,26 +1,26 @@
-const {express} = require("express");
+const express = require("express");
 const Restaurant = require("../models/Restaurant");
 
 const restaurantRouter = express.Router();
 
-restaurantRouter.get("/restaurants", async(req, res) =>{
+restaurantRouter.get("/", async(req, res) =>{
     let restaurants = await Restaurant.findAll();
     res.json(restaurants)
 })
 
-restaurantRouter.get(`/restaurants/:id`, async(req,res) =>{
+restaurantRouter.get(`/:id`, async(req,res) =>{
     let id = req.params.id
     let restaurant = await Restaurant.findByPk(id)
     res.json(restaurant)
 })
 
-restaurantRouter.post("/restaurants", async(req,res) =>{
+restaurantRouter.post("/", async(req,res) =>{
     let newRes = await Restaurant.create(req.body);
     res.json(newRes)
 
 })
 
-restaurantRouter.put(`/restaurants/:id`, async(req,res) =>{
+restaurantRouter.put(`/:id`, async(req,res) =>{
     let id = req.params.id
     let restaurant = await Restaurant.findByPk(id)
     if (!restaurant) {
@@ -33,7 +33,7 @@ restaurantRouter.put(`/restaurants/:id`, async(req,res) =>{
     res.json(restaurant)
 })
 
-restaurantRouter.delete(`/restaurants/:id`, async(req,res) =>{
+restaurantRouter.delete(`/:id`, async(req,res) =>{
     let id = req.params.id
     let restaurant = await Restaurant.findByPk(id)
     if (!restaurant) {
@@ -41,6 +41,7 @@ restaurantRouter.delete(`/restaurants/:id`, async(req,res) =>{
     }
     await restaurant.destroy()
     res.send('Restaurant deleted');
-})
+});
+
 
 module.exports = restaurantRouter;
