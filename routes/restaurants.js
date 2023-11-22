@@ -1,10 +1,12 @@
 const express = require("express");
 const Restaurant = require("../models/Restaurant");
+const Menu = require("../models/Menu")
+const Item = require("../models/Item")
 
 const restaurantRouter = express.Router();
 
 restaurantRouter.get("/", async(req, res) =>{
-    let restaurants = await Restaurant.findAll();
+    let restaurants = await Restaurant.findAll({include: Menu});
     res.json(restaurants)
 })
 
