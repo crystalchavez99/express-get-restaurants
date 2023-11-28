@@ -37,4 +37,10 @@ describe('restaurant endpoints', () =>{
         const responseData = await request(app).del("/restaurants/4")
         expect(responseData.statusCode).toBe(200)
     })
+
+    test("should return errors array", async() =>{
+        const response = await request(app).post("/restaurants")
+        .send({name: "T"})
+        expect(response.body).toHaveProperty("error")
+    })
 })
